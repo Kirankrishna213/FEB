@@ -14,7 +14,6 @@ body {
   justify-content: center;
   color: white;
   text-align: center;
-  overflow: hidden;
 }
 
 .box {
@@ -37,7 +36,6 @@ button {
   border: none;
   border-radius: 25px;
   cursor: pointer;
-  position: relative;
 }
 
 .yes {
@@ -48,7 +46,6 @@ button {
 .no {
   background: #ff4757;
   color: white;
-  position: absolute;
 }
 </style>
 </head>
@@ -57,28 +54,35 @@ button {
 
 <div class="box" id="page1">
   <h1>Do you love me ❤️</h1>
+  <p id="cryText"></p>
   <button class="yes" onclick="yesClick()">Yes</button>
-  <button class="no" id="noBtn">No</button>
+  <button class="no" onclick="noClick()">No</button>
 </div>
 
 <div class="box" id="finalPage" style="display:none">
   <h1>Good girl 😌❤️</h1>
   <p>Of course you love me, <b>SUE_T-REX</b>.</p>
-  <p>You tried to escape, but failed beautifully.</p>
+  <p>You tried to say no, but your heart betrayed you.</p>
   <p>You are officially stuck with me forever.</p>
   <p>Happy Valentine’s Day 💕</p>
 </div>
 
 <script>
 let yesCount = 0;
-const noBtn = document.getElementById("noBtn");
+let noCount = 0;
 
-noBtn.addEventListener("mouseover", () => {
-  const x = Math.random() * (window.innerWidth - 120);
-  const y = Math.random() * (window.innerHeight - 60);
-  noBtn.style.left = x + "px";
-  noBtn.style.top = y + "px";
-});
+const cries = [
+  "Why would you do that 😢",
+  "That hurts 💔",
+  "I am not crying, you are 😭",
+  "Okay now that was rude 🥺",
+  "Please do not click no again 😭"
+];
+
+function noClick() {
+  document.getElementById("cryText").innerText = cries[noCount % cries.length];
+  noCount++;
+}
 
 function yesClick() {
   yesCount++;
