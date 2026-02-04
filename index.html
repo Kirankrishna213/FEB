@@ -14,11 +14,10 @@ body {
   justify-content: center;
   color: white;
   text-align: center;
-  overflow: hidden;
 }
 
 .box {
-  max-width: 360px;
+  width: 320px;
   padding: 30px;
   position: relative;
 }
@@ -50,6 +49,8 @@ button {
   background: #ff5c8a;
   color: white;
   position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 </style>
 </head>
@@ -69,21 +70,29 @@ let yesCount = 0;
 let noCount = 0;
 let running = true;
 
+const box = document.getElementById("page");
 const noBtn = document.getElementById("noBtn");
 const msg = document.getElementById("msg");
 
-// Make NO run for 5 seconds
+// Run NO button inside the box only
 const runInterval = setInterval(() => {
   if (!running) return;
-  noBtn.style.left = Math.random() * (window.innerWidth - 120) + "px";
-  noBtn.style.top = Math.random() * (window.innerHeight - 60) + "px";
+
+  const maxX = box.clientWidth - noBtn.offsetWidth;
+  const maxY = box.clientHeight - noBtn.offsetHeight - 60;
+
+  noBtn.style.left = Math.random() * maxX + "px";
+  noBtn.style.top = Math.random() * maxY + 60 + "px";
 }, 400);
 
+// Stop running after 5 seconds
 setTimeout(() => {
   running = false;
-  noBtn.style.position = "relative";
   clearInterval(runInterval);
-  msg.innerText = "Okay fine… now answer properly 😌";
+  noBtn.style.left = "50%";
+  noBtn.style.top = "auto";
+  noBtn.style.transform = "translateX(-50%)";
+  msg.innerText = "Alright… now answer properly 😌";
 }, 5000);
 
 function noClick() {
@@ -91,9 +100,9 @@ function noClick() {
 
   if (noCount === 1) {
     noBtn.innerText = "😭";
-    msg.innerText = "Ouch… that hurt. Think again.";
+    msg.innerText = "Ouch. That hurt. Think again.";
   } else {
-    msg.innerText = "You have no choice but to say Yes 😏";
+    msg.innerText = "You really have no choice but to say Yes 😏";
   }
 }
 
@@ -105,11 +114,10 @@ function yesClick() {
     return;
   }
 
-  document.getElementById("page").innerHTML = `
+  box.innerHTML = `
     <h1>Good girl 💋💋💋</h1>
     <p>Of course you love me, <b>SUE_T-REX</b>.</p>
     <p>No more drama now 😌</p>
-    <p>Happy Valentine’s Day 💜</p>
   `;
 }
 </script>
